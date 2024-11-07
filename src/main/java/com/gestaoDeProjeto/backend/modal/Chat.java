@@ -1,7 +1,5 @@
 package com.gestaoDeProjeto.backend.modal;
 
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,34 +10,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-public class Issue {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class Chat {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title;
-    private String description;
-    private String status;
-    private Long projectID;
-    private String priority;
-    private LocalDate dueDate;
-    private List<String> tags = new ArrayList<>();
+    private String name;
 
-    @ManyToOne
-    private User assignee;
-
-    @JsonIgnore
-    @ManyToOne
+    @OneToOne
     private Project project;
 
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List <Message> messages;
 
+    @ManyToMany
+    private List<User> users = new ArrayList<>();
 }
