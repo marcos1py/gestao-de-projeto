@@ -19,76 +19,91 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gestaoDeProjeto.backend.config.JwtProvider;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.UserRepository;
-import com.gestaoDeProjeto.backend.requist.LoginRequist;
+import com.gestaoDeProjeto.backend.requist.LoginRequest;
 import com.gestaoDeProjeto.backend.response.AuthResponse;
+import com.gestaoDeProjeto.backend.service.CustomUserDetailsImplementaion;
 import com.gestaoDeProjeto.backend.service.CustumeUserDatailsImpl;
+import com.gestaoDeProjeto.backend.service.SubscriptionService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private CustomUserDetailsImplementaion customUserDetailsImplementation;
+	
+	@Autowired
+	private SubscriptionService subscriptionService;
+	
+	@PostMapping("/signup")
+	public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception
+	{
+		User isUserExist = userRepository.findByEmail(user.getEmail());
+		
+		if(isUserExist!=null)
+		{
+			throw new Exception("Email already exists with another account..!");
+		}
+		
+		User createdUser = new User();
+		createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		createdUser.setEmail(user.getEmail());
+		createdUser.setFullName(user.getFullName());
+		
+		User savedUser = userRepository.save(createdUser);
+		
+		subscriptionService.createSubscription(savedUser);
+		
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		String jwt = JwtProvider.generateToken(authentication);
+		
+		AuthResponse authResponse = new AuthResponse();
+		authResponse.setMessage("Signup Success..!");
+		authResponse.setJwt(jwt);
+		
+		return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/signin")
+	public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest){
+		
+		String username = loginRequest.getEmail();
+		String password=loginRequest.getPassword();
+		
+		Authentication authentication = authenticate(username,password);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		String jwt = JwtProvider.generateToken(authentication);
+		
+		AuthResponse authResponse = new AuthResponse();
+		authResponse.setMessage("Sigin Success..!");
+		authResponse.setJwt(jwt);
+		
+		return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
+		
+	}
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private CustumeUserDatailsImpl custumeUserDatailsImpl;  
-    
-    @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUser(@RequestBody User user) {
-        User userExists = userRepository.findByEmail(user.getEmail());
-        
-        if (userExists != null) {
-            throw new RuntimeException("Email já cadastrado");
-        }
-
-        User createdUser = new User();
-        createdUser.setEmail(user.getEmail());
-        createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        createdUser.setFullName(user.getFullName());
-        User savedUser = userRepository.save(createdUser);
-
-        
-        Authentication authenticator = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authenticator);
-
-        String jwt = JwtProvider.genereteToken(authenticator);
-
-        AuthResponse response = new AuthResponse();
-        response.setJwt(jwt);
-        response.setMessage("Usuário criado com sucesso");
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-    
-    @PostMapping("/signing")
-    public ResponseEntity<AuthResponse> signing(@RequestBody LoginRequist loginRequist){
-        String userName =  loginRequist.getEmail();
-        String password = loginRequist.getPassword();
-
-        Authentication authenticator = authenticator(userName, password);
-        SecurityContextHolder.getContext().setAuthentication(authenticator);
-
-        String jwt = JwtProvider.genereteToken(authenticator);
-
-        AuthResponse response = new AuthResponse();
-        response.setJwt(jwt);
-        response.setMessage("Usuário criado com sucesso");
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-
-    }
-
-    private Authentication authenticator(String userName, String password) {
-        UserDetails userDetails = custumeUserDatailsImpl.loadUserByUsername(userName);
-        if (userDetails == null) {
-            throw new BadCredentialsException("Usuário ou senha inválidos");
-        }
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("senha inválidos");
-        }
-        return new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
-    }
+	private Authentication authenticate(String username, String password) {
+		
+		UserDetails userDetails=customUserDetailsImplementation.loadUserByUsername(username);
+		
+		if(userDetails==null)
+		{
+			throw new BadCredentialsException("Invalid Username..!");
+		}
+		if(!passwordEncoder.matches(password, userDetails.getPassword()))
+		{
+			throw new BadCredentialsException("Invalid Password..!");
+		}
+		
+		return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+	}
 }

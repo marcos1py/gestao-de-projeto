@@ -5,25 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Entity
 @Data
-@NoArgsConstructor
+@Entity
 @AllArgsConstructor
-public class Comment {
+@NoArgsConstructor
+public class Comments {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String content;
-    private LocalDate createdDateTime;
+
+    private LocalDateTime createdDateTime;
 
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Issue issue;
+
+@ManyToOne
+@JsonBackReference
+private Issue issue;
 
 }

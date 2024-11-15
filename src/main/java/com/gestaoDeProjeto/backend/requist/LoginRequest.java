@@ -3,7 +3,7 @@ package com.gestaoDeProjeto.backend.requist;
 import lombok.Data;
 
 @Data
-public class LoginRequist {
+public class LoginRequest {
     private String email;
     private String password;
 }

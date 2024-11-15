@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,23 +17,23 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Usuarios")
+@Table(name = "usuarios")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     private String fullName;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private int projectSize;
 
     @JsonIgnore
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
-    private List<Issue>assignedIssues = new ArrayList<>();
-
+    private List<Issue> assignedIssues = new ArrayList<>();
 
 }
