@@ -1,7 +1,7 @@
 package com.gestaoDeProjeto.backend.modal;
 
-
 import java.time.LocalDate;
+import java.time.LocalDateTime; // Certifique-se de que esta importação está presente
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +30,8 @@ public class Issue {
     private String status;
     private Long projectID;
     private String priority;
-    private LocalDate dueDate;
+    private LocalDateTime createdAt; // Certifique-se de que o tipo está correto
+    private LocalDate dueDate; // Adicionado o campo `dueDate`
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne
@@ -44,4 +45,21 @@ public class Issue {
     @JsonManagedReference
     private List<Comments> comments = new ArrayList<>();
 
+    // Getter e Setter para dueDate
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    // Getter e Setter para createdAt
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

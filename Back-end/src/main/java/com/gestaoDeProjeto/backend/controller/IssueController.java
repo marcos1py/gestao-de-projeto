@@ -11,6 +11,7 @@ import com.gestaoDeProjeto.backend.requist.IssueRequest;
 import com.gestaoDeProjeto.backend.response.MessageResponse;
 import com.gestaoDeProjeto.backend.service.IssueService;
 import com.gestaoDeProjeto.backend.service.UserService;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class IssueController {
 		issueDTO.setProjectID(createdIssue.getProjectID());
 		issueDTO.setProject(createdIssue.getProject());;
 		issueDTO.setTags(createdIssue.getTags());
+        issueDTO.setCreatedAt(LocalDateTime.now());
 		
 		return ResponseEntity.ok(issueDTO);
 	}

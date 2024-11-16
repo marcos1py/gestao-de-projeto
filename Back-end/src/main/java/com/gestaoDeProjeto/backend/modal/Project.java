@@ -20,6 +20,7 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 
 
@@ -36,6 +37,7 @@ public class Project {
     private String name;
     private String description;
     private String category;
+    private LocalDateTime createdAt;
 
     @ElementCollection
     private List <String> tags = new ArrayList<>();

@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import com.gestaoDeProjeto.backend.modal.Chat;
 import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.ProjectRepository;
+
 @Service
 public class ProjectServiceImpl implements ProjectService{
 
@@ -31,6 +32,7 @@ public class ProjectServiceImpl implements ProjectService{
         createdProject.setTags(project.getTags());
         createdProject.setName(project.getName());
         createdProject.setCategory(project.getCategory());
+        createdProject.setCreatedAt(LocalDateTime.now());
         createdProject.setDescription(project.getDescription());
         createdProject.getTeam().add(user);
 

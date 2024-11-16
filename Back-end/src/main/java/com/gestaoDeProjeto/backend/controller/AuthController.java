@@ -24,6 +24,7 @@ import com.gestaoDeProjeto.backend.response.AuthResponse;
 import com.gestaoDeProjeto.backend.service.CustomUserDetailsImplementaion;
 import com.gestaoDeProjeto.backend.service.CustumeUserDatailsImpl;
 import com.gestaoDeProjeto.backend.service.SubscriptionService;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -54,6 +55,7 @@ public class AuthController {
 		User createdUser = new User();
 		createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
 		createdUser.setEmail(user.getEmail());
+		createdUser.setCreatedAt(LocalDateTime.now());
 		createdUser.setFullName(user.getFullName());
 		
 		User savedUser = userRepository.save(createdUser);
