@@ -9,7 +9,7 @@ import Auth from "./pages/Auth/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUser } from "./Redux/Auth/Action";
-import { fetchProjects } from "./Redux/Project/Action";
+import { fetchProjects, fetchCategories, fetchTags } from "./Redux/Project/Action";
 import UpgradeSuccess from "./pages/Subscription/UpgradeSuccess";
 import AcceptInvitation from "./pages/Project/AcceptInvitation";
 
@@ -18,6 +18,8 @@ function App() {
   const auth = useSelector((store) => store.auth);
   useEffect(() => {
     dispatch(getUser());
+    dispatch(fetchCategories()); 
+    dispatch(fetchTags());
     dispatch(fetchProjects([]));
   }, [auth.jwt,dispatch]);
 

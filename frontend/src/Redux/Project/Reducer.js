@@ -6,7 +6,9 @@ import {
   fetchProjectById,
   deleteProject,
   inviteToProject,
-  acceptInvitation
+  acceptInvitation,
+  fetchCategories,
+  fetchTags 
 } from './Action' 
 
 const initialState = {
@@ -123,6 +125,18 @@ const projectSlice = createSlice({
       .addCase(acceptInvitation.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload; 
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        console.error("Erro ao buscar categorias: ", action.payload);
+      })
+      .addCase(fetchTags.fulfilled, (state, action) => {
+        state.tags = action.payload; 
+      })
+      .addCase(fetchTags.rejected, (state, action) => {
+        console.error("Erro ao buscar tags: ", action.payload);
       });
   },
 });

@@ -3,8 +3,6 @@ package com.gestaoDeProjeto.backend.modal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -22,8 +20,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
-
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -36,22 +32,24 @@ public class Project {
 
     private String name;
     private String description;
-    private String category;
     private LocalDateTime createdAt;
 
-    @ElementCollection
-    private List <String> tags = new ArrayList<>();
+    @ManyToOne
+    private Category category; 
+
+    @ManyToMany
+    private List<Tags> tags = new ArrayList<>(); 
 
     @JsonIgnore
-    @OneToOne(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Chat chat;
 
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List <Issue> issues = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Issue> issues = new ArrayList<>();
 
     @ManyToMany
-    private List <User> team = new ArrayList<>();
+    private List<User> team = new ArrayList<>();
 }

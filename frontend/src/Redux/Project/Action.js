@@ -108,3 +108,41 @@ export const acceptInvitation = createAsyncThunk(
     }
   }
 );
+export const fetchCategories = createAsyncThunk(
+  "projects/fetchCategories",
+  async (_, { rejectWithValue }) => {
+    try {
+      // Chama a API para pegar todos os projetos
+      const data = await api("/api/projects"); // Pode ser necessário ajustar a URL de acordo com a sua API
+      console.log("all projects", data);
+
+      // Extraímos as categorias únicas dos projetos retornados
+      const categories = data.map((project) => project.category); // Mapeia todas as categorias
+      const uniqueCategories = [...new Set(categories)]; // Filtra categorias únicas
+
+      return uniqueCategories; // Retorna as categorias únicas
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const fetchTags = createAsyncThunk(
+  "projects/fetchTags",
+  async (_, { rejectWithValue }) => {
+    try {
+      // Chama a API para pegar todos os projetos
+      const data = await api("/api/projects"); // Ajuste a URL de acordo com a sua API
+      console.log("all projects", data);
+
+      // Extraímos todas as tags dos projetos
+      const allTags = data.flatMap((project) => project.tags); // Flatten dos arrays de tags dos projetos
+
+      // Filtra as tags únicas
+      const uniqueTags = [...new Set(allTags)];
+
+      return uniqueTags; // Retorna as tags únicas
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
