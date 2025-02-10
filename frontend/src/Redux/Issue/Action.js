@@ -4,7 +4,7 @@ import { api } from "@/Config/api";
 export const createIssue = createAsyncThunk(
   "issues/createIssue",
   async (issueData, { rejectWithValue }) => {
-    console.log("Issue data --",issueData);
+    //console.log("Issue data --",issueData);
     
     try {
 
@@ -12,7 +12,7 @@ export const createIssue = createAsyncThunk(
         method: "POST",
         body: JSON.stringify(issueData),
       });
-      console.log("Issue created success  ", data);
+      //console.log("Issue created success  ", data);
       return data;
     } catch (error) { 
       return rejectWithValue(error.message);
@@ -51,7 +51,7 @@ export const updateIssueStatus = createAsyncThunk(
       const data = await api(`/api/issues/${id}/status/${status}`, {
         method: "PUT",
       });
-      console.log("update issue data",data);
+      //console.log("update issue data",data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -61,14 +61,14 @@ export const updateIssueStatus = createAsyncThunk(
 
 export const deleteIssue = createAsyncThunk("issues/deleteIssue",
   async (id,{rejectWithValue}) => {
-    console.log("Action id",id);
+    //console.log("Action id",id);
     
     try{
       const data = await api(`/api/issues/${id}`,{
         method: "DELETE",
       });
-      console.log("Response data",data);
-      console.log("response id",id);
+      //console.log("Response data",data);
+      //console.log("response id",id);
       return id;
     }
     catch(error){

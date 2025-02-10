@@ -24,13 +24,13 @@ const IssueDetails = () => {
   const dispatch = useDispatch();
   const {issues} = useSelector((store) => store.issue);
   const comment = useSelector((store)=>store.comment);
-  console.log("full name from assignee",issues.assignee?.fullName);
-  console.log("comment reducer",comment);
+  //console.log("full name from assignee",issues.assignee?.fullName);
+  //console.log("comment reducer",comment);
   
   const handleUpdateIssueStatus = (status) => {
     dispatch(updateIssueStatus({ id: issueId, status }));
-    console.log(status);
-    console.log("Issue status", issues.status);
+    //console.log(status);
+    //console.log("Issue status", issues.status);
   };
 
   useEffect(() => {

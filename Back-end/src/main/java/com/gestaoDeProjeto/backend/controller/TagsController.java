@@ -1,5 +1,6 @@
 package com.gestaoDeProjeto.backend.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.Tags;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.service.TagsService;
@@ -22,9 +24,13 @@ public class TagsController {
     @Autowired
     private UserService userService;
 
+
+
     // Criar Tag
     @PostMapping
-    public ResponseEntity<Tags> createTag(@RequestBody Tags tag, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Tags> createTag(
+        @RequestBody Tags tag, 
+        @RequestHeader("Authorization")String jwt) throws Exception {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Tags createdTag = tagsService.createTag(tag);
@@ -36,7 +42,8 @@ public class TagsController {
 
     // Listar todas as Tags
     @GetMapping
-    public ResponseEntity<Iterable<Tags>> getAllTags(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Iterable<Tags>> getAllTags(
+        @RequestHeader("Authorization")String jwt) throws Exception{
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Iterable<Tags> tags = tagsService.getAllTags();
@@ -48,7 +55,9 @@ public class TagsController {
 
     // Obter Tag por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Tags> getTagById(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Tags> getTagById(@PathVariable Long id, 
+    @RequestHeader("Authorization")String jwt) throws Exception
+     {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Optional<Tags> tagOptional = tagsService.getTagById(id);
@@ -64,7 +73,9 @@ public class TagsController {
 
     // Atualizar Tag
     @PatchMapping("/{id}")
-    public ResponseEntity<Tags> updateTag(@PathVariable Long id, @RequestBody Tags tag, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Tags> updateTag(@PathVariable Long id, @RequestBody Tags tag, 
+    @RequestHeader("Authorization")String jwt) throws Exception
+    {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Tags updatedTag = tagsService.updateTag(id, tag);
@@ -76,7 +87,9 @@ public class TagsController {
 
     // Deletar Tag
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Void> deleteTag(@PathVariable Long id, 
+    @RequestHeader("Authorization")String jwt) throws Exception
+     {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             tagsService.deleteTag(id);

@@ -19,9 +19,9 @@ const commentSlice = createSlice({
       })
       .addCase(createComment.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("from action.payload", action.payload);
+        //console.log("from action.payload", action.payload);
         state.comments.push(action.payload);
-        console.log("From state comments", state.comments);
+        //console.log("From state comments", state.comments);
       })
       .addCase(createComment.rejected, (state, action) => {
         state.loading = false;

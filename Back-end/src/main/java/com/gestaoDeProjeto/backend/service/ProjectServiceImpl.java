@@ -49,20 +49,29 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<Project> getProjectByTeam(User user, String category, String tag) throws Exception {
-
-        List<Project> projects = projectRepository.findByTeamContainingOrOwner(user,user);
-
-        if (category!=null){
-            projects = projects.stream().filter(project -> project.getCategory().
-                    equals(category)).collect(Collectors.toList());
+        List<Project> projects = projectRepository.findByTeamContainingOrOwner(user, user);
+    
+        // Filtro por categoria (verificando se o nome da categoria corresponde)
+        if (category != null && !category.isEmpty()) {
+            projects = projects.stream()
+                    .filter(project -> project.getCategory() != null 
+                            && project.getCategory().getNome().equalsIgnoreCase(category))
+                    .collect(Collectors.toList());
         }
-
-        if (tag!=null){
-            projects = projects.stream().filter(project -> project.getTags().
-                    contains(tag)).collect(Collectors.toList());
+    
+        // Filtro por tag (verificando se a lista de tags contém um nome correspondente)
+        if (tag != null && !tag.isEmpty()) {
+            projects = projects.stream()
+                    .filter(project -> project.getTags() != null 
+                            && project.getTags().stream()
+                            .anyMatch(t -> t.getNome().equalsIgnoreCase(tag)))
+                    .collect(Collectors.toList());
         }
+    
         return projects;
     }
+    
+    
 
     @Override
     public Project getProjectById(Long projectId) throws Exception {

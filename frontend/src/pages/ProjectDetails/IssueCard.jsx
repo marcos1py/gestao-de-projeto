@@ -16,10 +16,10 @@ import { deleteIssue } from "@/Redux/Issue/Action";
 const IssueCard = ({ item, projectId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log("Project Id from Issue card", projectId);
+  //console.log("Project Id from Issue card", projectId);
 
   const handleIssueDelete = () => {
-    console.log("From itemId", item.id);
+    //console.log("From itemId", item.id);
 
     dispatch(deleteIssue(item.id));
   };

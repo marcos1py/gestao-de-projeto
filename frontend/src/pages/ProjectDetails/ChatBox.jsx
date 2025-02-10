@@ -20,14 +20,20 @@ const ChatBox = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    dispatch(fetchChatByProjectId(id));
-  }, []);
+    if (id) {
+      dispatch(fetchChatByProjectId(id));
+    }
+  }, [id, dispatch]); // Agora id está na dependência
 
   useEffect(() => {
-    dispatch(fetchChatMessages(chat.chat?.id));
-  }, []);
+    if (chat.chat?.id) {
+      dispatch(fetchChatMessages(chat.chat.id));
+    }
+  }, [chat.chat?.id, dispatch]); // Agora depende de chat.chat.id
 
   const handleSendMessage = () => {
+    if (message.trim() === "") return; // Evita enviar mensagens vazias
+
     dispatch(
       sendMessage({
         senderId: auth.user?.id,
@@ -38,6 +44,7 @@ const ChatBox = () => {
     console.log("message", message);
     setMessage("");
   };
+
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
@@ -49,7 +56,7 @@ const ChatBox = () => {
         <ScrollArea className="h-[32rem] w-full p-5 flex gap-3 flex-col">
           {chat?.messages?.map((item, index) =>
             item.sender.id !== auth.user.id ? (
-              <div className="flex gap-2 mb-2 justify-start" key={item}>
+              <div className="flex gap-2 mb-2 justify-start" key={item.id}>
                 <Avatar>
                   <AvatarFallback>S</AvatarFallback>
                 </Avatar>
@@ -59,7 +66,7 @@ const ChatBox = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex gap-2 mb-2 justify-end" key={item}>
+              <div className="flex gap-2 mb-2 justify-end" key={item.id}>
                 <div className="space-y-2 py-2 px-5 border rounded-se-2xl rounded-s-xl">
                   <p>{item.sender.fullName}</p>
                   <p className="text-gray-300">{item.content}</p>
@@ -73,7 +80,7 @@ const ChatBox = () => {
         </ScrollArea>
         <div className="relative p-0">
           <Input
-            placeHolder="type a message..."
+            placeholder="Type a message..."
             className="py-7 border-t outline-none focus:outline-none focus:ring-0 rounded-none border-b-0 border-x-0"
             value={message}
             onChange={handleMessageChange}

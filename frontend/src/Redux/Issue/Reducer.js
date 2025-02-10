@@ -64,9 +64,9 @@ const issueSlice = createSlice({
       })
       .addCase(updateIssueStatus.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("state data",state);
+        //console.log("state data",state);
         
-        console.log("updateIssueStatus",action.payload);
+        //console.log("updateIssueStatus",action.payload);
         
         action.payload.issues = action.payload.issues.map((issue) =>
           issue.id === action.payload.id ? action.payload : issue
@@ -81,7 +81,7 @@ const issueSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteIssue.fulfilled, (state, action) => {
-        console.log("From action.payload",action.payload);
+        //console.log("From action.payload",action.payload);
         
         state.loading = false;
         state.issues = state.issues.filter(
@@ -99,7 +99,7 @@ const issueSlice = createSlice({
       })
       .addCase(assignIssueToUser.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("From assign issue to user reducer",action.payload.assignee.fullName);
+        //console.log("From assign issue to user reducer",action.payload.assignee.fullName);
         
         state.issues = state.issues.map((issue) =>
           issue.id === action.payload.id ? action.payload : issue

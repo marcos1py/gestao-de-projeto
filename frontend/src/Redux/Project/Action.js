@@ -40,7 +40,7 @@ export const createProjects = createAsyncThunk(
         method: "POST",
         body: JSON.stringify(projectData),
       });
-      console.log("created project", data);
+      //console.log("created project", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -53,7 +53,7 @@ export const fetchProjectById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const data = await api(`/api/projects/${id}`);
-      console.log("project", data);
+      //console.log("project", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -68,7 +68,7 @@ export const deleteProject = createAsyncThunk(
       const data = await api(`/api/projects/${projectId}`, {
         method: "DELETE",
       });
-      console.log("deleted project", data);
+      //console.log("deleted project", data);
       return projectId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -84,7 +84,7 @@ export const inviteToProject = createAsyncThunk(
         method: "POST",
         body: JSON.stringify({ email, projectId }),
       });
-      console.log("invite to project", data);
+      //console.log("invite to project", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -101,7 +101,7 @@ export const acceptInvitation = createAsyncThunk(
       }).toString();
       const data = await api(`/api/projects/accept_invitation?${queryParams}`);
       navigate(`/project/${data.projectId}`);
-      console.log("accept invitation", data);
+      //console.log("accept invitation", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -112,14 +112,13 @@ export const fetchCategories = createAsyncThunk(
   "projects/fetchCategories",
   async (_, { rejectWithValue }) => {
     try {
-      // Chama a API para pegar todos os projetos
-      const data = await api("/api/projects"); // Pode ser necessário ajustar a URL de acordo com a sua API
-      console.log("all projects", data);
-
-      // Extraímos as categorias únicas dos projetos retornados
-      const categories = data.map((project) => project.category); // Mapeia todas as categorias
-      const uniqueCategories = [...new Set(categories)]; // Filtra categorias únicas
-
+      const data = await api("/api/categories");
+      //console.log("all categories", data);
+      const uniqueCategories = data.map((categorie) => ({
+        id: categorie.id,    // Certifique-se de que o campo 'id' existe
+        nome: categorie.nome // Certifique-se de que o campo 'nome' existe
+      }));
+      //console.log("unique categories", uniqueCategories);
       return uniqueCategories; // Retorna as categorias únicas
     } catch (error) {
       return rejectWithValue(error.message);
@@ -130,17 +129,45 @@ export const fetchTags = createAsyncThunk(
   "projects/fetchTags",
   async (_, { rejectWithValue }) => {
     try {
-      // Chama a API para pegar todos os projetos
-      const data = await api("/api/projects"); // Ajuste a URL de acordo com a sua API
-      console.log("all projects", data);
-
-      // Extraímos todas as tags dos projetos
-      const allTags = data.flatMap((project) => project.tags); // Flatten dos arrays de tags dos projetos
-
-      // Filtra as tags únicas
+      const data = await api("/api/tags");
+      //console.log("all tags", data);
+      const allTags = data.flatMap((tags) => tags.nome); 
       const uniqueTags = [...new Set(allTags)];
 
       return uniqueTags; // Retorna as tags únicas
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+export const createCategory = createAsyncThunk(
+  "projects/createCategory",
+  async (categoryData, { rejectWithValue }) => {
+    try {
+      const data = await api("/api/categories", {
+        method: "POST",
+        body: JSON.stringify(categoryData),
+      });
+      console.log("created category", data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const createTags = createAsyncThunk(
+  "projects/createTags",
+  async (categoryData, { rejectWithValue }) => {
+    try {
+      const data = await api("/api/tags", {
+        method: "POST",
+        body: JSON.stringify(categoryData),
+      });
+      console.log("created createTags", data);
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

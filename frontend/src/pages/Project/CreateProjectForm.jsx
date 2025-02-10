@@ -16,15 +16,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
-import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProjects } from "@/Redux/Project/Action";
 
-
 const CreateProjectForm = () => {
-
   const dispatch = useDispatch();
+
+  const categorias = useSelector((store) => store.project.categories);
+  const tags = useSelector((store) => store.project.tags);
 
   const handleTagsChange = (newValue) => {
     const currentTags = form.getValues("tags");
@@ -39,13 +39,13 @@ const CreateProjectForm = () => {
       name: "",
       description: "",
       category: "",
-      tags: ["javascript", "react"],
+      tags: [],
     },
   });
 
   const onSubmit = (data) => {
     dispatch(createProjects(data));
-    console.log("Create project data", data);
+    //console.log("Create project data", data);
   };
 
   return (
@@ -99,16 +99,16 @@ const CreateProjectForm = () => {
                     value={field.value}
                     onValueChange={(value) => {
                       field.onChange(value);
-                    }}
-                    // className="border w-full border-gray-700 py-5 px-5"
-                  >
+                    }}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="fullstack">Full Stack</SelectItem>
-                      <SelectItem value="frontend">Frontend</SelectItem>
-                      <SelectItem value="backend">Backend</SelectItem>
+                      {categorias.map((categoria) => (
+                        <SelectItem key={categoria.nome} value={categoria.nome}>
+                          {categoria.nome}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>

@@ -14,14 +14,14 @@ export const register = createAsyncThunk(
         body: JSON.stringify(userData),
       });
       const data = await response.json();
-      console.log("register success", data);
+      //console.log("register success", data);
       if (data.jwt) {
         localStorage.setItem("jwt", data.jwt);
         return data;
       }
       return rejectWithValue("JWT not found");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -40,14 +40,14 @@ export const login = createAsyncThunk(
         body: JSON.stringify(userData),
       });
       const data = await response.json();
-      console.log("login success", data);
+      //console.log("login success", data);
       if (data.jwt) {
         localStorage.setItem("jwt", data.jwt);
         return data;
       }
       return rejectWithValue("JWT not found");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -65,10 +65,10 @@ export const getUser = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log("getUser success", data);
+      //console.log("getUser success", data);
       return data;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -79,7 +79,7 @@ export const logout = createAsyncThunk(
   'auth/logout',
   async () => {
     localStorage.clear();
-    console.log("logout success");
+    //console.log("logout success");
     
   }
 );

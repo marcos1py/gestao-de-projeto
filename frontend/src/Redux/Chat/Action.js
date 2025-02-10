@@ -9,7 +9,7 @@ export const sendMessage = createAsyncThunk(
                 method: "POST",
                 body: JSON.stringify(messageData),
             });
-            console.log("Chat created..",data);
+            //console.log("Chat created..",data);
             
             return data;
         } catch (error) {
@@ -37,6 +37,7 @@ export const fetchChatMessages = createAsyncThunk(
     async (chatId, { rejectWithValue }) => {
         try {
             const data = await api(`/api/messages/chat/${chatId}`);
+            console.log("Fetching chat messages",data);
             return data;
         } catch (error) {
             return rejectWithValue(error.message);

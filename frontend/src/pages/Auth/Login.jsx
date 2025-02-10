@@ -16,7 +16,7 @@ const Login = () => {
     
       const onSubmit = (data) => {
         dispatch(login(data));
-        console.log("Create project data", data);
+       // //console.log("Create project data", data);
       };
   return (
     <div className="space-y-5">

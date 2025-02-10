@@ -12,28 +12,26 @@ import {
 import ProjectCard from "../Project/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, searchProjects } from "@/Redux/Project/Action";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import CreateProjectForm from "../Project/CreateProjectForm";
 
-export const tags = [
-  "all",
-  "javascript",
-  "react",
-  "springboot",
-  "nextjs",
-  "mysql",
-  "mongodb",
-  "angular",
-  "python",
-  "django",
-  "flask",
-  "nodejs",
-  "expressjs",
-];
 
 const ProjectList = () => {
   const [keyword, setKeyword] = useState("");
   const dispatch = useDispatch();
-  const projects = useSelector((store) => store.project.projects);
-  const searchItems = useSelector((store) => store.project.searchProjects);
+  const projects = useSelector((store) => store.project.projects || []);
+  const searchItems = useSelector(
+    (store) => store.project.searchProjects || []
+  );
+  const tags = useSelector((store) => store.project.tags || []);
+
+  const categorias = useSelector((store) => store.project.categories);
+  console.log("categorias AQUI", categorias);
 
   const handleFilterTags = (value) => {
     if (value == "all") dispatch(fetchProjects({}));
@@ -50,7 +48,9 @@ const ProjectList = () => {
 
   return (
     <div className="relative px-5 lg:px-0 lg:flex gap-5 justify-center py-5">
+
       <section className="filterSection">
+
         <Card className="p-5 sticky top-10">
           <div className="flex justify-between lg:w-[20rem]">
             <p className="text-xl tracking-wider">filters</p>
@@ -73,18 +73,12 @@ const ProjectList = () => {
                       <RadioGroupItem value="all" id="r1" />
                       <Label htmlFor="r1">all</Label>
                     </div>
+                    {categorias.map((categoria, index) => (
                     <div className="flex items-center gap-2">
-                      <RadioGroupItem value="fullstack" id="r2" />
-                      <Label htmlFor="r2">fullstack</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="frontend" id="r3" />
-                      <Label htmlFor="r3">frontend</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="backend" id="r4" />
-                      <Label htmlFor="r4">backend</Label>
-                    </div>
+                    <RadioGroupItem value={categoria.nome} id={"r" + 1 +index} />
+                    <Label htmlFor={"r" + 1 +index}>{categoria.nome}</Label>
+                  </div>
+                    ))}
                   </RadioGroup>
                 </div>
               </div>
@@ -97,6 +91,11 @@ const ProjectList = () => {
                     defaultValue="all"
                     onValueChange={(value) => handleFilterTags(value)}
                   >
+                    <div key="all" className="flex items-center gap-2">
+                      <RadioGroupItem value="all" id="r1-all" />
+                      <Label htmlFor="r1-all">all</Label>
+                    </div>
+
                     {tags.map((tag) => (
                       <div key={tag} className="flex items-center gap-2">
                         <RadioGroupItem value={tag} id={`r1-${tag}`} />
@@ -110,7 +109,9 @@ const ProjectList = () => {
           </CardContent>
         </Card>
       </section>
+      
       <section className="projectListSection w-full lg:w-[48rem]">
+        
         <div className="flex gap-2 items-center pb-5 justify-between">
           <div className="relative p-0 w-full">
             <Input
@@ -120,19 +121,31 @@ const ProjectList = () => {
             />
             <MagnifyingGlassIcon className="absolute top-3 left-4 " />
           </div>
+          <Dialog>
+          <DialogTrigger>
+            <Button >New Project</Button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>Create New Project</DialogHeader>
+            <CreateProjectForm />
+          </DialogContent>
+        </Dialog>
+        <br/>
         </div>
 
         <div>
           <div className="space-y-5 min-h-[74vh]">
             {keyword
               ? searchItems?.map((item) => (
-                  <ProjectCard item={item} key={item.id + 100} />
+                  <ProjectCard item={item} key={item.id} />
                 ))
               : projects?.map((item) => (
                   <ProjectCard key={item.id} item={item} />
                 ))}
           </div>
         </div>
+        
       </section>
     </div>
   );

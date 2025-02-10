@@ -21,7 +21,6 @@ import { fetchProjectById } from "@/Redux/Project/Action";
 const ProjectDetails = () => {
   const dispatch = useDispatch();
   const projectDetails = useSelector((store) => store.project.projectDetails);
-  console.log("Project details=== ", projectDetails);
 
   const { id } = useParams();
 
@@ -40,7 +39,8 @@ const ProjectDetails = () => {
               {projectDetails?.name}
             </h1>
             <div className="space-y-5 pb-10 text-sm">
-              <p className="w-full md:max-w-lg lg:max-w-xl ">
+              <p className="flex w-full md:max-w-lg lg:max-w-xl ">
+              <p className="w-36">Description :</p>
                 {projectDetails?.description}
               </p>
               <div className="flex ">
@@ -79,7 +79,7 @@ const ProjectDetails = () => {
               </div>
               <div className="flex ">
                 <p className="w-36">Category :</p>
-                <p>{projectDetails?.category}</p>
+                <p>{projectDetails?.category.nome}</p>
               </div>
               <div className="flex ">
                 <p className="w-36">Project Lead :</p>

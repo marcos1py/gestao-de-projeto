@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -8,25 +7,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { inviteToProject } from "@/Redux/Project/Action";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createCategory } from "@/Redux/Project/Action";
 
-const InviteUserForm = () => {
+const CreateCategoryForm = () => {
   const dispatch = useDispatch();
-  const {id} = useParams();
 
+  const categorias = useSelector((store) => store.project.categories);
 
   const form = useForm({
     defaultValues: {
-      email: "",
+      nome: "",
     },
   });
 
   const onSubmit = (data) => {
-    dispatch(inviteToProject({email:data.email,projectId:id}))
-    //console.log("Create project data", data);
+    dispatch(createCategory(data));
+    //console.log("Create Category data", data);
   };
 
   return (
@@ -35,7 +33,7 @@ const InviteUserForm = () => {
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
-            name="email"
+            name="nome"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -43,7 +41,7 @@ const InviteUserForm = () => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="User email..."
+                    placeholder="Category name..."
                   />
                 </FormControl>
                 <FormMessage />
@@ -51,15 +49,13 @@ const InviteUserForm = () => {
             )}
           />
 
-          <DialogClose>
-            <Button type="submit" className="w-full mt-5">
-              Invite User
-            </Button>
-          </DialogClose>
+          <Button type="submit" className="w-full mt-5">
+            Create category
+          </Button>
         </form>
       </Form>
     </div>
   );
 };
 
-export default InviteUserForm;
+export default CreateCategoryForm;

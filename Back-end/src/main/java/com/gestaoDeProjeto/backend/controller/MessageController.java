@@ -33,6 +33,7 @@ public class MessageController {
         User user = userService.findUserById(request.getSenderId());
         Chat chats = projectService.getProjectById(request.getProjectId()).getChat();
         if(chats == null) throw new Exception("Chats not found");
+        System.out.println(" PRINT AQUI" + request);
         Message sentMessage = messageService.sendMessage(request.getSenderId(), request.getProjectId(), request.getContent());
         return ResponseEntity.ok(sentMessage);
     }

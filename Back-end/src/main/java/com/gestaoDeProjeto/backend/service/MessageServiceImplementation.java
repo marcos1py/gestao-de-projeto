@@ -30,8 +30,8 @@ public class MessageServiceImplementation implements MessageService {
         Chat chat = projectService.getProjectById(projectId).getChat();
 
         Message message = new Message();
-        message. setContent(content);
-        message. setSender (sender);
+        message.setContent(content);
+        message.setSender (sender);
         message.setCreatedAt(LocalDateTime.now());
         message.setChat(chat);
         Message savedMessage = messageRepository.save(message);

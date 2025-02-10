@@ -26,7 +26,7 @@ const CreateIssueForm = ({status}) => {
   const onSubmit = (data) => {
     data.projectId = parseInt(id);
     dispatch(createIssue({title:data.issueName,description:data.description,projectId:id,status}));
-    console.log("Create issue data", data);
+    //console.log("Create issue data", data);
   };
   return (
     <div>

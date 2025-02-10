@@ -33,7 +33,7 @@ const ProjectCard = ({ item }) => {
                 {item.name}
               </h1>
               <DotFilledIcon />
-              <p className="text-sm text-gray-400">{item.category}</p>
+              <p className="text-sm text-gray-400">{item.category.nome}</p>
             </div>
             <div>
               <DropdownMenu>
@@ -56,8 +56,8 @@ const ProjectCard = ({ item }) => {
         </div>
         <div className="flex flex-wrap gap-2 items-center">
           {item.tags.map((tag) => (
-            <Badge key={tag} variant="outline">
-              {tag}
+            <Badge key={tag.nome} variant="outline">
+              {tag.nome}
             </Badge>
           ))}
         </div>

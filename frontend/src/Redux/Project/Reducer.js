@@ -3,18 +3,22 @@ import {
   fetchProjects,
   searchProjects,
   createProjects,
+  createCategory,
+  createTags,
   fetchProjectById,
   deleteProject,
   inviteToProject,
   acceptInvitation,
   fetchCategories,
-  fetchTags 
-} from './Action' 
+  fetchTags,
+} from './Action';
 
 const initialState = {
   projects: [],
   searchProjects: [],
   projectDetails: null,
+  categories: [],
+  tags: [],
   loading: false,
   error: null,
 };
@@ -30,22 +34,21 @@ const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Handle fetchProjects actions
       .addCase(fetchProjects.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Fetched projects",action.payload);
-        
         state.projects = action.payload;
-        console.log("Current -----",state.projects);
       })
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
+      // Handle searchProjects actions
       .addCase(searchProjects.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -53,30 +56,27 @@ const projectSlice = createSlice({
       .addCase(searchProjects.fulfilled, (state, action) => {
         state.loading = false;
         state.searchProjects = action.payload;
-        console.log("Searched project",state.searchProjects);
-        
       })
       .addCase(searchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
+      // Handle createProjects actions
       .addCase(createProjects.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(createProjects.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("To be pushed ---- ",action.payload);
         state.projects.push(action.payload);
-        
-        console.log("current projects", state.projects);
       })
       .addCase(createProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
+      // Handle fetchProjectById actions
       .addCase(fetchProjectById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -90,6 +90,7 @@ const projectSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Handle deleteProject actions
       .addCase(deleteProject.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -103,6 +104,7 @@ const projectSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Handle inviteToProject actions
       .addCase(inviteToProject.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -115,6 +117,7 @@ const projectSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Handle acceptInvitation actions
       .addCase(acceptInvitation.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -126,17 +129,50 @@ const projectSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // Handle fetchCategories actions
       .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.categories = action.payload; 
+        state.categories = action.payload;
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         console.error("Erro ao buscar categorias: ", action.payload);
       })
+
+      // Handle fetchTags actions
       .addCase(fetchTags.fulfilled, (state, action) => {
-        state.tags = action.payload; 
+        state.tags = action.payload;
       })
       .addCase(fetchTags.rejected, (state, action) => {
         console.error("Erro ao buscar tags: ", action.payload);
+      })
+
+      // Handle createCategory actions (only once)
+      .addCase(createCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories.push(action.payload);
+      })
+      .addCase(createCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Handle createTags actions
+      .addCase(createTags.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createTags.fulfilled, (state, action) => {
+        state.loading = false;
+        // Optionally, add the created tag to state (similar to createCategory)
+        state.tags.push(action.payload);
+      })
+      .addCase(createTags.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

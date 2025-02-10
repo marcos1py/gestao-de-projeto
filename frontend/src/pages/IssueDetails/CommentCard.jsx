@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 const CommentCard = ({item}) => {
   const dispatch= useDispatch();
 
-  console.log("From comment card",item);
+  //console.log("From comment card",item);
 
   const handleDeleteComment = () => {
     dispatch(deleteComment(item.id));

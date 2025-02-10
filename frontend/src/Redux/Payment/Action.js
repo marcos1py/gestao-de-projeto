@@ -15,7 +15,7 @@ export const createPayment = createAsyncThunk(
       
       return data; 
     } catch (error) {
-      console.log('payment error', error);
+      //console.log('payment error', error);
       return rejectWithValue(error.message); 
     }
   }

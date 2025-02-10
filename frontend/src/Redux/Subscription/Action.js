@@ -6,10 +6,10 @@ export const getUserSubscription = createAsyncThunk(
   async (_, { rejectWithValue }) => {  
     try {
       const data = await api('/api/subscriptions/user');
-      console.log('user subscription', data);
+      //console.log('user subscription', data);
       return data;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -22,10 +22,10 @@ export const upgradeSubscription = createAsyncThunk(
       const data = await api(`/api/subscriptions/upgrade?planType=${planType}`, {
         method: 'PATCH',
       });
-      console.log('upgrade subscription', data);
+      //console.log('upgrade subscription', data);
       return data;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return rejectWithValue(error.message);
     }
   }
