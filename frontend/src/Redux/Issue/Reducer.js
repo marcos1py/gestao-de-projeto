@@ -4,6 +4,7 @@ import {
   createIssue,
   deleteIssue,
   fetchIssueById,
+  fetchIssuesForUser, // importe a ação
   fetchIssues,
   updateIssueStatus,
 } from "./Action";
@@ -106,6 +107,18 @@ const issueSlice = createSlice({
         );
       })
       .addCase(assignIssueToUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchIssuesForUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchIssuesForUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.issues = action.payload;
+      })
+      .addCase(fetchIssuesForUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -8,13 +8,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createCategory } from "@/Redux/Project/Action";
 
-const CreateCategoryForm = () => {
+const CreateCategoryForm = ({ onClose }) => {
   const dispatch = useDispatch();
-
-  const categorias = useSelector((store) => store.project.categories);
 
   const form = useForm({
     defaultValues: {
@@ -22,9 +20,15 @@ const CreateCategoryForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    dispatch(createCategory(data));
-    //console.log("Create Category data", data);
+  const onSubmit = async (data) => {
+    try {
+      // Despacha a ação e espera a conclusão (usando unwrap se for createAsyncThunk)
+      await dispatch(createCategory(data)).unwrap();
+      // Se a criação for bem-sucedida, fecha o dialog
+      onClose();
+    } catch (error) {
+      console.error("Erro ao criar categoria:", error);
+    }
   };
 
   return (

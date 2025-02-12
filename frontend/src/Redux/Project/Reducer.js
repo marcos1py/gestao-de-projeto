@@ -140,8 +140,10 @@ const projectSlice = createSlice({
 
       // Handle fetchTags actions
       .addCase(fetchTags.fulfilled, (state, action) => {
+        //console.log("Tags recebidas no Redux:", action.payload);
         state.tags = action.payload;
       })
+      
       .addCase(fetchTags.rejected, (state, action) => {
         console.error("Erro ao buscar tags: ", action.payload);
       })

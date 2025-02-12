@@ -8,13 +8,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTags } from "@/Redux/Project/Action";
 
-const CreateTagsForm = () => {
+const CreateTagsForm = ({ onClose }) => {
   const dispatch = useDispatch();
-
-  const tags = useSelector((store) => store.project.tags || []);
 
   const form = useForm({
     defaultValues: {
@@ -22,9 +20,13 @@ const CreateTagsForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    dispatch(createTags(data));
-    //console.log("Create Tags data", data);
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(createTags(data)).unwrap();
+      onClose();
+    } catch (error) {
+      console.error("Erro ao criar tag:", error);
+    }
   };
 
   return (
@@ -41,7 +43,7 @@ const CreateTagsForm = () => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="Tags name..."
+                    placeholder="Tag name..."
                   />
                 </FormControl>
                 <FormMessage />
@@ -50,7 +52,7 @@ const CreateTagsForm = () => {
           />
 
           <Button type="submit" className="w-full mt-5">
-            Create tags
+            Create tag
           </Button>
         </form>
       </Form>

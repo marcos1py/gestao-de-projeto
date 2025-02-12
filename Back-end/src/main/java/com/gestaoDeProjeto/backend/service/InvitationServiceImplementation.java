@@ -1,13 +1,11 @@
 package com.gestaoDeProjeto.backend.service;
 
-import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.gestaoDeProjeto.backend.modal.Invitation;
 import com.gestaoDeProjeto.backend.repository.InvitationRepository;
-
+import jakarta.mail.MessagingException;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class InvitationServiceImplementation implements InvitationService{
@@ -28,6 +26,9 @@ public class InvitationServiceImplementation implements InvitationService{
         invitationRepository.save(invitation);
 
         String invitationLink="http://localhost:5173/accept_invitation?token="+invitationToken;
+        System.out.println("PRINTE AQW: ");
+        System.out.println("Invitation link: "+invitationLink);
+        System.out.println("Email: "+email);
         emailService.sendEmailWithToken(email,invitationLink);
 
     }

@@ -3,7 +3,8 @@ package com.gestaoDeProjeto.backend.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -48,28 +49,49 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<Project> getProjectByTeam(User user, String category, String tag) throws Exception {
-        List<Project> projects = projectRepository.findByTeamContainingOrOwner(user, user);
-    
-        // Filtro por categoria (verificando se o nome da categoria corresponde)
-        if (category != null && !category.isEmpty()) {
-            projects = projects.stream()
-                    .filter(project -> project.getCategory() != null 
-                            && project.getCategory().getNome().equalsIgnoreCase(category))
-                    .collect(Collectors.toList());
-        }
-    
-        // Filtro por tag (verificando se a lista de tags contém um nome correspondente)
-        if (tag != null && !tag.isEmpty()) {
-            projects = projects.stream()
-                    .filter(project -> project.getTags() != null 
-                            && project.getTags().stream()
-                            .anyMatch(t -> t.getNome().equalsIgnoreCase(tag)))
-                    .collect(Collectors.toList());
-        }
-    
-        return projects;
+public List<Project> getProjectByTeam(User user, String category, String tag, String minDate, String maxDate) throws Exception {
+    List<Project> projects = projectRepository.findByTeamContainingOrOwner(user, user);
+
+    // Filtro por categoria
+    if (category != null && !category.isEmpty()) {
+        projects = projects.stream()
+                .filter(project -> project.getCategory() != null 
+                        && project.getCategory().getNome().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
     }
+
+    // Filtro por tag
+    if (tag != null && !tag.isEmpty()) {
+        projects = projects.stream()
+                .filter(project -> project.getTags() != null 
+                        && project.getTags().stream()
+                            .anyMatch(t -> t.getNome().equalsIgnoreCase(tag)))
+                .collect(Collectors.toList());
+    }
+
+    // Filtro por data mínima (se informada)
+    if (minDate != null && !minDate.isEmpty()) {
+        LocalDate minLocalDate = LocalDate.parse(minDate); // formato esperado "yyyy-MM-dd"
+        LocalDateTime minDateTime = minLocalDate.atStartOfDay();
+        projects = projects.stream()
+                .filter(project -> project.getCreatedAt() != null 
+                        && !project.getCreatedAt().isBefore(minDateTime))
+                .collect(Collectors.toList());
+    }
+
+    // Filtro por data máxima (se informada)
+    if (maxDate != null && !maxDate.isEmpty()) {
+        LocalDate maxLocalDate = LocalDate.parse(maxDate); // formato esperado "yyyy-MM-dd"
+        // Considera o final do dia para incluir todos os projetos deste dia
+        LocalDateTime maxDateTime = maxLocalDate.atTime(23, 59, 59);
+        projects = projects.stream()
+                .filter(project -> project.getCreatedAt() != null 
+                        && !project.getCreatedAt().isAfter(maxDateTime))
+                .collect(Collectors.toList());
+    }
+
+    return projects;
+}
     
     
 

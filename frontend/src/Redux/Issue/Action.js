@@ -20,17 +20,17 @@ export const createIssue = createAsyncThunk(
   }
 );
 
-export const fetchIssues = createAsyncThunk(
-  "issues/fetchIssues",
-  async (id, { rejectWithValue }) => {
-    try {
-      const data = await api(`/api/issues/project/${id}`);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+  export const fetchIssues = createAsyncThunk(
+    "issues/fetchIssues",
+    async (id, { rejectWithValue }) => {
+      try {
+        const data = await api(`/api/issues/project/${id}`);
+        return data;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
     }
-  }
-);
+  );
 
 export const fetchIssueById = createAsyncThunk(
   "issues/fetchIssueById",
@@ -84,6 +84,35 @@ export const assignIssueToUser = createAsyncThunk(
       const data = await api(`/api/issues/${issueId}/assignee/${userId}`, {
         method: "PUT",
       });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const fetchIssuesForUser = createAsyncThunk(
+  "issues/fetchIssuesForUser",
+  async ({ minDate = "", maxDate = "" } = {}, { rejectWithValue }) => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (minDate) queryParams.append("minDate", minDate);
+      if (maxDate) queryParams.append("maxDate", maxDate);
+      // O endpoint /api/issues/user deve estar implementado no back-end para retornar as issues do usuário logado
+      const data = await api(`/api/issues/user?${queryParams.toString()}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Se desejar implementar uma pesquisa de issues, crie também o searchIssues.
+export const searchIssues = createAsyncThunk(
+  "issues/searchIssues",
+  async (keyword, { rejectWithValue }) => {
+    try {
+      // Implemente seu endpoint de pesquisa para issues, se houver
+      const data = await api(`/api/issues/search?keyword=${encodeURIComponent(keyword)}`);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

@@ -26,14 +26,7 @@ const CreateProjectForm = () => {
   const categorias = useSelector((store) => store.project.categories);
   const tags = useSelector((store) => store.project.tags);
 
-  const handleTagsChange = (newValue) => {
-    const currentTags = form.getValues("tags");
-    const updatedTags = currentTags.includes(newValue)
-      ? currentTags.filter((tag) => tag !== newValue)
-      : [...currentTags, newValue];
-    form.setValue("tags", updatedTags);
-  };
-
+  // Inicializa o formulário
   const form = useForm({
     defaultValues: {
       name: "",
@@ -43,15 +36,25 @@ const CreateProjectForm = () => {
     },
   });
 
+  // Função para adicionar ou remover tags do array
+  const handleTagsChange = (newValue) => {
+    const currentTags = form.getValues("tags");
+    const updatedTags = currentTags.includes(newValue)
+      ? currentTags.filter((tag) => tag !== newValue)
+      : [...currentTags, newValue];
+    form.setValue("tags", updatedTags);
+  };
+
   const onSubmit = (data) => {
     dispatch(createProjects(data));
-    //console.log("Create project data", data);
+    // console.log("Create project data", data);
   };
 
   return (
     <div>
       <Form {...form}>
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+          {/* Campo: Nome do Projeto */}
           <FormField
             control={form.control}
             name="name"
@@ -70,6 +73,7 @@ const CreateProjectForm = () => {
             )}
           />
 
+          {/* Campo: Descrição do Projeto */}
           <FormField
             control={form.control}
             name="description"
@@ -88,6 +92,7 @@ const CreateProjectForm = () => {
             )}
           />
 
+          {/* Campo: Categoria */}
           <FormField
             control={form.control}
             name="category"
@@ -99,13 +104,14 @@ const CreateProjectForm = () => {
                     value={field.value}
                     onValueChange={(value) => {
                       field.onChange(value);
-                    }}>
+                    }}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
                       {categorias.map((categoria) => (
-                        <SelectItem key={categoria.nome} value={categoria.nome}>
+                        <SelectItem key={categoria.id} value={categoria.nome}>
                           {categoria.nome}
                         </SelectItem>
                       ))}
@@ -117,6 +123,7 @@ const CreateProjectForm = () => {
             )}
           />
 
+          {/* Campo: Tags */}
           <FormField
             control={form.control}
             name="tags"
@@ -124,24 +131,23 @@ const CreateProjectForm = () => {
               <FormItem>
                 <FormControl>
                   <Select
-                    // value={field.value}
                     onValueChange={(value) => {
                       handleTagsChange(value);
                     }}
-                    // className="border w-full border-gray-700 py-5 px-5"
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Tags" />
                     </SelectTrigger>
                     <SelectContent>
-                      {tags.map((item) => (
-                        <SelectItem key={item} value={item}>
-                          {item}
+                      {tags.map((tag) => (
+                        <SelectItem key={tag.id} value={tag.nome}>
+                          {tag.nome}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
+                {/* Exibe as tags selecionadas */}
                 <div className="flex gap-1 flex-wrap">
                   {field.value.map((item) => (
                     <div
@@ -163,8 +169,7 @@ const CreateProjectForm = () => {
             {false ? (
               <div>
                 <p>
-                  you can create only 3 project with free plan, please upgrade
-                  your plan
+                  You can create only 3 projects with the free plan. Please upgrade your plan.
                 </p>
               </div>
             ) : (

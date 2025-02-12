@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Table,
   TableBody,
@@ -20,40 +21,41 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@radix-ui/react-dropdown-menu";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"; // ícone de 3 pontos
-import { FaEdit, FaTrash } from "react-icons/fa"; // ícones de editar e deletar da react-icons
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import CreateCategoryForm from "../Category/CreateCategoryForm";
+import EditCategoryForm from "../Category/EditCategoryForm";
+import { deleteCategory } from "@/Redux/Project/Action"; // importe a ação de deleção
 
 const CategoryList = () => {
-  const category = useSelector((store) => store.project.categories || []);
+  const dispatch = useDispatch();
+  const categories = useSelector((store) => store.project.categories || []);
+  const [editCategory, setEditCategory] = useState(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
-  const handleEdit = (category) => {
-    console.log("Edit category:", category);
-    // Lógica para editar a categoria
+  const handleEdit = (cat) => {
+    setEditCategory(cat);
+    setIsEditDialogOpen(true);
   };
 
-  const handleDelete = (category) => {
-    console.log("Delete category:", category);
-    // Lógica para deletar a categoria
+  const handleDelete = async (cat) => {
+    dispatch(deleteCategory(cat.id));
+    dispatch(fetchCategories());
   };
 
   return (
     <div className="p-4">
-      <div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold mb-4">Lista de Categorias</h1>
-          <Dialog>
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl font-bold mb-4">Lista de Categorias</h1>
+        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger>
-            <Button >Adicionar</Button>
+            <Button onClick={() => setIsAddDialogOpen(true)}>Adicionar</Button>
           </DialogTrigger>
-
           <DialogContent>
             <DialogHeader>Add category</DialogHeader>
-            <CreateCategoryForm />
+            <CreateCategoryForm onClose={() => setIsAddDialogOpen(false)} />
           </DialogContent>
-
         </Dialog>
-        </div>
       </div>
       <Table>
         <TableHeader>
@@ -64,11 +66,11 @@ const CategoryList = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {category.length > 0 ? (
-            category.map((cat, index) => (
+          {categories.length > 0 ? (
+            categories.map((cat, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{cat.nome || 'N/A'}</TableCell> 
+                <TableCell>{cat.nome || "N/A"}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger>
@@ -95,6 +97,19 @@ const CategoryList = () => {
           )}
         </TableBody>
       </Table>
+
+      {/* Diálogo para Edição – sempre renderizado e controlado pela prop "open" */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>Editar Categoria</DialogHeader>
+          {editCategory && (
+            <EditCategoryForm
+              category={editCategory}
+              onClose={() => setIsEditDialogOpen(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

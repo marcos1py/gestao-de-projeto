@@ -18,6 +18,7 @@ const Navbar = () => {
       <div className="flex items-center gap-3">
         <p onClick={()=>navigate("/")} className="cursor-pointer">GESTAO DE PROJETO</p>
         <Button onClick={()=>navigate("/")} variant="ghost">Home</Button>
+        <Button onClick={()=>navigate("/Demandas")} variant="ghost">Demandas</Button>
         <Button onClick={()=>navigate("/Tags")} variant="ghost">Tags</Button>
         <Button onClick={()=>navigate("/Category")} variant="ghost">Categorys</Button>
         

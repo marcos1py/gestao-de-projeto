@@ -45,13 +45,17 @@ public class ProjectController {
 
 	@GetMapping
 	public ResponseEntity<List<Project>> getProjects(
-			@RequestParam(required = false) String category,
-			@RequestParam(required = false) String tag,
-			@RequestHeader("Authorization") String jwt) throws Exception {
+		@RequestParam(required = false) String category,
+		@RequestParam(required = false) String tag,
+		@RequestParam(required = false) String minDate,
+		@RequestParam(required = false) String maxDate,
+		@RequestHeader("Authorization") String jwt) throws Exception {
+		
 		User user = userService.findUserProfileByJwt(jwt);
-		List<Project> projects = projectService.getProjectByTeam(user, category, tag);
+		List<Project> projects = projectService.getProjectByTeam(user, category, tag, minDate, maxDate);
 		return new ResponseEntity<>(projects, HttpStatus.OK);
 	}
+	
 
 	@GetMapping("/{projectId}")
 	public ResponseEntity<Project> getProjectById(

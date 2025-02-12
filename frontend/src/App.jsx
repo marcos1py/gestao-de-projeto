@@ -15,6 +15,7 @@ import UpgradeSuccess from "./pages/Subscription/UpgradeSuccess";
 import AcceptInvitation from "./pages/Project/AcceptInvitation";
 import Tags from "./pages/Tags/Tags";
 import LoadingScreen from "./components/ui/LoadingScreen";
+import DemandasKanban from "./pages/Demandas/DemandasKanban";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
@@ -39,11 +40,12 @@ function App() {
 
   return (
     <>
-      {auth.user ? (
+{ auth.user && auth.user.id ? (
         <div>
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Demandas" element={<DemandasKanban />} />
             <Route path="/category" element={<Category />} />
             <Route path="/tags" element={<Tags />} />
             <Route path="/project/:id" element={<ProjectDetails />} />

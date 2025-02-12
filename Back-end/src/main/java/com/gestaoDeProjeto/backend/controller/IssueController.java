@@ -88,4 +88,10 @@ public class IssueController {
         Issue issue = issueService.updateStatus(issueId, status);
         return ResponseEntity.ok(issue);
     }
+    @GetMapping("/user")
+    public ResponseEntity<List<Issue>> getIssuesForUser(@RequestHeader("Authorization") String token) throws Exception {
+        User user = userService.findUserProfileByJwt(token);
+        List<Issue> issues = issueService.getIssuesForUser(user);
+        return ResponseEntity.ok(issues);
+    }
 }

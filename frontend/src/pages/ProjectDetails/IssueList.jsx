@@ -24,10 +24,10 @@ import { useEffect } from "react";
 const IssueList = ({ title, status }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  
   const {issues} = useSelector((store) => store.issue);
   
-
+  console.log(issues)
   useEffect(() => {
     dispatch(fetchIssues(id));
   }, [id, dispatch]);
