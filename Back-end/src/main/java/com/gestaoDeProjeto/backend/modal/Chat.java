@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Chat {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_seq")
+@SequenceGenerator(name = "chat_seq", sequenceName = "chat_seq", allocationSize = 1)
+private Long id;
 
     private String name;
 

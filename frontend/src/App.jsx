@@ -5,6 +5,8 @@ import Category from "./pages/Category/Category";
 import Navbar from "./pages/Navbar/Navbar";
 import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 import IssueDetails from "./pages/IssueDetails/IssueDetails";
+import { fetchIssuesForUser } from "@/Redux/Issue/Action";
+
 import Subscripton from "./pages/Subscription/Subscripton";
 import Auth from "./pages/Auth/Auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +29,8 @@ function App() {
       await dispatch(fetchCategories());
       await dispatch(fetchTags());
       await dispatch(fetchProjects([]));
+      await dispatch(fetchIssuesForUser([]));
+
       setLoading(false); // Define que o carregamento foi concluído
     };
 

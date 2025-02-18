@@ -1,9 +1,5 @@
 package com.gestaoDeProjeto.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.gestaoDeProjeto.backend.modal.Issue;
 import com.gestaoDeProjeto.backend.modal.IssueDTO;
 import com.gestaoDeProjeto.backend.modal.User;
@@ -12,8 +8,10 @@ import com.gestaoDeProjeto.backend.response.MessageResponse;
 import com.gestaoDeProjeto.backend.service.IssueService;
 import com.gestaoDeProjeto.backend.service.UserService;
 import java.time.LocalDateTime;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/issues")
@@ -51,11 +49,10 @@ public class IssueController {
 		issueDTO.setDueDate(createdIssue.getDueDate());
 		issueDTO.setPriority(createdIssue.getPriority());
 		issueDTO.setAssignee(createdIssue.getAssignee());
-		issueDTO.setProjectID(createdIssue.getProjectID());
+		issueDTO.setProjectID(createdIssue.getProject().getId());
 		issueDTO.setProject(createdIssue.getProject());;
 		issueDTO.setTags(createdIssue.getTags());
         issueDTO.setCreatedAt(LocalDateTime.now());
-		
 		return ResponseEntity.ok(issueDTO);
 	}
     

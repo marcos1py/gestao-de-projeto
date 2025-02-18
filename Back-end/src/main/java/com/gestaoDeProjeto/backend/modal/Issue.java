@@ -30,8 +30,8 @@ public class Issue {
     private String status;
     private Long projectID;
     private String priority;
-    private LocalDateTime createdAt; // Certifique-se de que o tipo está correto
-    private LocalDate dueDate; // Adicionado o campo `dueDate`
+    private LocalDateTime createdAt;
+    private LocalDate dueDate;
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne
@@ -43,7 +43,7 @@ public class Issue {
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Comments> comments = new ArrayList<>();
+    private List<Andamentos> andamentos = new ArrayList<>();
 
     // Getter e Setter para dueDate
     public LocalDate getDueDate() {

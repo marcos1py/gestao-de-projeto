@@ -21,7 +21,7 @@ public class IssueDTO {
     private Long projectID;
     private String priority;
     private LocalDate dueDate;
-    private LocalDateTime createdAt; // Certifique-se de que o tipo está correto
+    private LocalDateTime createdAt; 
     private List<String> tags = new ArrayList<>();
     private User assignee;
     private Project project;

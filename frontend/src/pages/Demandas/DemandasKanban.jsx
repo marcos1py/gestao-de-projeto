@@ -5,11 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchIssuesForUser, updateIssueStatus } from "@/Redux/Issue/Action";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useNavigate, useLocation } from "react-router-dom"; // importe useLocation
 
 const DemandasKanban = () => {
   const dispatch = useDispatch();
-  const reduxIssues = useSelector((store) => store.issue.issues || []);
-
+  const navigate = useNavigate();
+  const location = useLocation(); // inicialize o hook useLocation
+  const reduxIssuesRaw = useSelector((store) => store.issue.issues);
+  const reduxIssues = Array.isArray(reduxIssuesRaw) ? reduxIssuesRaw : [];
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [columns, setColumns] = useState({
     pending: { name: "Pending", items: [] },
@@ -17,10 +21,11 @@ const DemandasKanban = () => {
     done: { name: "Done", items: [] },
   });
 
-  // Carrega as issues do usuário ao montar o componente
+  // Carrega as issues do usuário ao montar ou ao mudar a rota
   useEffect(() => {
     dispatch(fetchIssuesForUser());
   }, [dispatch]);
+
 
   // Memoriza o array filtrado para evitar recriações desnecessárias
   const filteredIssues = useMemo(() => {
@@ -45,7 +50,6 @@ const DemandasKanban = () => {
     });
   }, [filteredIssues]);
 
-  // Função chamada ao terminar de arrastar
   // Função chamada ao terminar de arrastar
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -77,6 +81,7 @@ const DemandasKanban = () => {
       dispatch(
         updateIssueStatus({ id: removed.id, status: destination.droppableId })
       );
+      console.log("Atualizou columns", columns);
     }
   };
 
@@ -89,12 +94,12 @@ const DemandasKanban = () => {
           placeholder="Buscar demanda..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border  text-slate-300 rounded px-3 py-2 w-full max-w-md"
+          className="border text-slate-300 rounded px-3 py-2 w-full max-w-md"
         />
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex gap-5 flex-1 overflow-auto">
+        <div className="flex gap-5 flex-1 overflow">
           {Object.entries(columns).map(([columnId, column]) => (
             <Card key={columnId} className="flex flex-col p-5 flex-1">
               <h2 className="text-xl font-bold mb-4 text-center">
@@ -121,7 +126,12 @@ const DemandasKanban = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`mb-3 ${
+                            onClick={() =>
+                              navigate(
+                                `/project/${item.projectID}/issue/${item.id}`
+                              )
+                            }
+                            className={`mb-3 cursor-pointer ${
                               snapshot.isDragging ? "bg-gray-700" : ""
                             }`}
                           >

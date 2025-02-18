@@ -1,16 +1,15 @@
 package com.gestaoDeProjeto.backend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.gestaoDeProjeto.backend.modal.Issue;
 import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.IssueRepository;
 import com.gestaoDeProjeto.backend.requist.IssueRequest;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class IssueServiceImplementation implements IssueService {
@@ -47,6 +46,7 @@ public class IssueServiceImplementation implements IssueService {
         issue.setStatus(issueRequest.getStatus());
         issue.setPriority(issueRequest.getPriority());
         issue.setDueDate(issueRequest.getDueDate());
+        issue.setProjectID(project.getId());
         issue.setProject(project);
 
         // Define a data/hora de criação com o horário atual
