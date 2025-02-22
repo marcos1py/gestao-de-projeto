@@ -55,7 +55,7 @@ const FilterSection = ({
                   onValueChange={onFilterCategory}
                 >
                   <div key="all" className="flex items-center gap-2">
-                    <RadioGroupItem value="all" id="cat-all" />
+                    <RadioGroupItem value="" id="cat-all" />
                     <Label htmlFor="cat-all">All</Label>
                   </div>
                   {categories.map((categoria) => (
@@ -82,7 +82,7 @@ const FilterSection = ({
                   onValueChange={onFilterTags}
                 >
                   <div key="all" className="flex items-center gap-2">
-                    <RadioGroupItem value="all" id="tag-all" />
+                    <RadioGroupItem value="" id="tag-all" />
                     <Label htmlFor="tag-all">All</Label>
                   </div>
                   {tags.map((tag) => (

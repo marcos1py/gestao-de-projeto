@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface AndamentoRepository extends JpaRepository <Andamentos,UUID> {
 
-    List <Andamentos> findAndamentoByIssueId(Long issueId);
+    List <Andamentos> findAndamentoByIssueId(UUID issueId);
 }

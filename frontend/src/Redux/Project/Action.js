@@ -15,7 +15,7 @@ export const fetchProjects = createAsyncThunk(
       if (maxDate) queryParams.append("maxDate", maxDate);
 
       const data = await api(`/api/projects?${queryParams.toString()}`);
-      console.log("all projects", data);
+     // console.log("all projects", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -30,7 +30,7 @@ export const searchProjects = createAsyncThunk(
       const data = await api(
         `/api/projects/search?keyword=${encodeURIComponent(keyword)}`
       );
-      console.log("search projects", data);
+      //console.log("search projects", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -136,7 +136,7 @@ export const fetchTags = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const data = await api("/api/tags");
-      console.log("all tags", data);
+     // console.log("all tags", data);
 
       return data; // Retorna a lista completa de tags (objetos)
     } catch (error) {

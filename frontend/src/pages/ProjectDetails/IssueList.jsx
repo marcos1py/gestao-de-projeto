@@ -24,10 +24,10 @@ import { useEffect } from "react";
 const IssueList = ({ title, status }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { issues } = useSelector((store) => store.issue) || { issues: [] };
+
+  //console.log("Issues from Redux:", issues, Array.isArray(issues));
   
-  const {issues} = useSelector((store) => store.issue);
-  
-  console.log(issues)
   useEffect(() => {
     dispatch(fetchIssues(id));
   }, [id, dispatch]);
@@ -41,9 +41,11 @@ const IssueList = ({ title, status }) => {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {issues?.filter((issue)=>issue.status==status).map((item) => (
-                <IssueCard item={item} projectId={id} key={item.id} />
-              ))}
+              {(Array.isArray(issues) ? issues : [])
+                .filter((issue) => issue.status === status)
+                .map((item) => (
+                  <IssueCard item={item} projectId={id} key={item.id} />
+                ))}
             </div>
           </CardContent>
           <CardFooter>
@@ -62,7 +64,7 @@ const IssueList = ({ title, status }) => {
           <DialogHeader>
             <DialogTitle>Create New Issue</DialogTitle>
           </DialogHeader>
-          <CreateIssueForm status={status}/>
+          <CreateIssueForm status={status} />
         </DialogContent>
       </Dialog>
     </div>

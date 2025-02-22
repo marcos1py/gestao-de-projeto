@@ -1,11 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_BASE_URL } from "@/Config/api";
 
-
+/**
+ * Registro de usuário
+ */
 export const register = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
+      // Verifica se todos os campos foram preenchidos
+      const { fullName, email, password } = userData;
+
+      if (!fullName || !email || !password) {
+        return rejectWithValue("Todos os campos são obrigatórios.");
+      }
+
+      // Envia os dados para o backend
       const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: 'POST',
         headers: {
@@ -13,21 +23,30 @@ export const register = createAsyncThunk(
         },
         body: JSON.stringify(userData),
       });
+
       const data = await response.json();
-      //console.log("register success", data);
+
+      // Verifica se a resposta foi bem-sucedida
+      if (!response.ok) {
+        return rejectWithValue(data.message || "Erro ao registrar usuário.");
+      }
+
       if (data.jwt) {
         localStorage.setItem("jwt", data.jwt);
         return data;
       }
-      return rejectWithValue("JWT not found");
+
+      return rejectWithValue("JWT não encontrado.");
     } catch (error) {
-      //console.log(error);
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message || "Erro desconhecido.");
     }
   }
 );
 
 
+/**
+ * Login de usuário
+ */
 export const login = createAsyncThunk(
   'auth/login',
   async (userData, { rejectWithValue }) => {
@@ -39,47 +58,65 @@ export const login = createAsyncThunk(
         },
         body: JSON.stringify(userData),
       });
+
       const data = await response.json();
-      //console.log("login success", data);
+
+      if (!response.ok) {
+        return rejectWithValue(data.message || "Credenciais inválidas.");
+      }
+
       if (data.jwt) {
         localStorage.setItem("jwt", data.jwt);
         return data;
       }
-      return rejectWithValue("JWT not found");
+
+      return rejectWithValue("JWT não encontrado.");
     } catch (error) {
-      //console.log(error);
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message || "Erro desconhecido.");
     }
   }
 );
 
-
+/**
+ * Obtém informações do usuário autenticado
+ */
 export const getUser = createAsyncThunk(
   'auth/getUser',
   async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("jwt");
+
+      if (!token) {
+        return rejectWithValue("Usuário não autenticado.");
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
+
       const data = await response.json();
-      //console.log("getUser success", data);
+
+      if (!response.ok) {
+        return rejectWithValue(data.message || "Erro ao obter dados do usuário.");
+      }
+
       return data;
     } catch (error) {
-      //console.log(error);
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message || "Erro desconhecido.");
     }
   }
 );
 
-
+/**
+ * Logout do usuário
+ */
 export const logout = createAsyncThunk(
   'auth/logout',
   async () => {
-    localStorage.clear();
-    //console.log("logout success");
-    
+    localStorage.removeItem("jwt");
+    return { success: true, message: "Logout realizado com sucesso." };
   }
 );

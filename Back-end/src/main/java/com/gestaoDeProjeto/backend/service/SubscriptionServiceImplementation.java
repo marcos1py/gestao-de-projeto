@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.PlanType;
 import com.gestaoDeProjeto.backend.modal.Subscription;
 import com.gestaoDeProjeto.backend.modal.User;
@@ -34,7 +34,7 @@ public class SubscriptionServiceImplementation implements SubscriptionService{
 	}
 
 	@Override
-	public Subscription getUsersSubscription(Long userId) throws Exception {
+	public Subscription getUsersSubscription(UUID userId) throws Exception {
 		 Subscription subscription = subscriptionRepository.findByUserId(userId);
 		 if(!isValid(subscription)) {
 			 subscription.setPlanType(PlanType.FREE);
@@ -45,7 +45,7 @@ public class SubscriptionServiceImplementation implements SubscriptionService{
 	}
 
 	@Override
-	public Subscription upgradSubscription(Long userId, PlanType planType) {
+	public Subscription upgradSubscription(UUID userId, PlanType planType) {
 		Subscription subscription = subscriptionRepository.findByUserId(userId);
 		
 		subscription.setPlanType(planType);

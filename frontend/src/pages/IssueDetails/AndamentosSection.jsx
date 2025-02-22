@@ -9,7 +9,7 @@ import { fetchAndamentos } from "@/Redux/Andamento/Action";
 const AndamentosSection = ({ issueId }) => {
   const dispatch = useDispatch();
   const { andamentos, loading, error } = useSelector((store) => store.andamento);
- console.log(andamentos.map((item) => (console.log(item))));
+ //console.log(andamentos.map((item) => (console.log(item))));
   useEffect(() => {
     if (issueId) {
       dispatch(fetchAndamentos(issueId));

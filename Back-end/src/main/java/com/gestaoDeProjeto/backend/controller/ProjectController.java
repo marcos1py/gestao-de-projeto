@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Category;
 import com.gestaoDeProjeto.backend.modal.Chat;
 import com.gestaoDeProjeto.backend.modal.Invitation;
@@ -59,7 +59,7 @@ public class ProjectController {
 
 	@GetMapping("/{projectId}")
 	public ResponseEntity<Project> getProjectById(
-			@PathVariable Long projectId,
+			@PathVariable UUID projectId,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		User user = userService.findUserProfileByJwt(jwt);
 		Project projects = projectService.getProjectById(projectId);
@@ -106,7 +106,7 @@ public class ProjectController {
 
 	@PatchMapping("/{projectId}")
 	public ResponseEntity<Project> updateProject(
-			@PathVariable Long projectId,
+			@PathVariable UUID projectId,
 			@RequestBody Project project,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		User user = userService.findUserProfileByJwt(jwt);
@@ -116,7 +116,7 @@ public class ProjectController {
 
 	@DeleteMapping("/{projectId}")
 	public ResponseEntity<MessageResponse> deleteProject(
-			@PathVariable Long projectId,
+			@PathVariable UUID projectId,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		User user = userService.findUserProfileByJwt(jwt);
 		projectService.deleteProject(projectId, user.getId());
@@ -135,7 +135,7 @@ public class ProjectController {
 
 	@GetMapping("/{projectId}/chat")
 	public ResponseEntity<Chat> getChatProjectById(
-			@PathVariable Long projectId,
+			@PathVariable UUID projectId,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		User user = userService.findUserProfileByJwt(jwt);
 		Chat chat = projectService.getChatByProjectId(projectId);

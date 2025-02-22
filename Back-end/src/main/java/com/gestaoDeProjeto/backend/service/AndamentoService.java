@@ -7,7 +7,7 @@ import com.gestaoDeProjeto.backend.modal.Andamentos;
 
 
 public interface AndamentoService {
-    Andamentos createAndamento(Long issueId, Long userId, String content) throws Exception;
-    void deleteAndamento(UUID andamentoId, Long userId) throws Exception;
-    List<Andamentos> findAndamentosByIssueId(Long issueId);
+    Andamentos createAndamento(UUID issueId, UUID userId, String content) throws Exception;
+    void deleteAndamento(UUID andamentoId, UUID userId) throws Exception;
+    List<Andamentos> findAndamentosByIssueId(UUID issueId);
 }

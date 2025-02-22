@@ -2,7 +2,7 @@ package com.gestaoDeProjeto.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Chat;
 import com.gestaoDeProjeto.backend.modal.Message;
 import com.gestaoDeProjeto.backend.modal.User;
@@ -23,7 +23,7 @@ public class MessageServiceImplementation implements MessageService {
     @Autowired
     private ProjectService projectService;
 
-    public Message sendMessage(Long senderId, Long projectId, String content) throws Exception{
+    public Message sendMessage(UUID senderId, UUID projectId, String content) throws Exception{
         User sender = userRepository.findById(senderId)
                 .orElseThrow(() -> new Exception("User not found with id: "+ senderId));
 
@@ -41,7 +41,7 @@ public class MessageServiceImplementation implements MessageService {
     }
 
     @Override
-    public List<Message> getMessagesByProjectId(Long projectId) throws Exception{
+    public List<Message> getMessagesByProjectId(UUID projectId) throws Exception{
         Chat chat = projectService.getChatByProjectId(projectId);
         List<Message> findByChatIdOrderByCreatedAtAsc = messageRepository.findByChatIdOrderByCreatedAtAsc(chat.getId());
         return findByChatIdOrderByCreatedAtAsc;

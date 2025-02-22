@@ -4,7 +4,7 @@ import com.gestaoDeProjeto.backend.modal.Category;
 import com.gestaoDeProjeto.backend.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> getCategoryById(Long id) {
+    public Optional<Category> getCategoryById(UUID id) {
         return categoryRepository.findById(id);
     }
 
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category updateCategory(Long id, Category categoryDetails) {
+    public Category updateCategory(UUID id, Category categoryDetails) {
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (existingCategory.isPresent()) {
             Category category = existingCategory.get();
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean deleteCategory(Long id) {
+    public boolean deleteCategory(UUID id) {
         Optional<Category> category = categoryRepository.findById(id);
         if (category.isPresent()) {
             categoryRepository.delete(category.get());

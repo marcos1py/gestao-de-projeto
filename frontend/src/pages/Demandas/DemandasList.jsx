@@ -16,7 +16,7 @@ const DemandasList = () => {
 
   // Como o reducer de issues está registrado com a chave "issue", use "store.issue.issues"
   const issues = useSelector((store) => store.issue.issues || []);
-  console.log(store.issue);
+  //console.log(store.issue);
   const searchItems = useSelector((store) => store.issue.searchIssues || []);
   const [dateFilter, setDateFilter] = useState({ minDate: "", maxDate: "" });
   const handleFilterDates = ({ minDate, maxDate }) => {

@@ -81,7 +81,7 @@ const DemandasKanban = () => {
       dispatch(
         updateIssueStatus({ id: removed.id, status: destination.droppableId })
       );
-      console.log("Atualizou columns", columns);
+      //console.log("Atualizou columns", columns);
     }
   };
 

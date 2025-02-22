@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.config.JwtProvider;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.UserRepository;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUserById(Long userId) throws Exception {
+    public User findUserById(UUID userId) throws Exception {
 
         Optional<User> optionalUser = userRepository.findById(userId);
 

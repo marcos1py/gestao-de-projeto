@@ -20,17 +20,22 @@ export const createIssue = createAsyncThunk(
   }
 );
 
-  export const fetchIssues = createAsyncThunk(
-    "issues/fetchIssues",
-    async (id, { rejectWithValue }) => {
-      try {
-        const data = await api(`/api/issues/project/${id}`);
-        return data;
-      } catch (error) {
-        return rejectWithValue(error.message);
-      }
+export const fetchIssues = createAsyncThunk(
+  "issues/fetchIssues",
+  async (projectId, { rejectWithValue }) => {
+    try {
+      console.log(`Fetching issues for project ID: ${projectId}`);
+      const data = await api(`/api/issues/project/${projectId}`);
+      console.log("Issues fetched:", data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching issues:", error);
+      return rejectWithValue(error.message);
     }
-  );
+  }
+);
+
+
 
 export const fetchIssueById = createAsyncThunk(
   "issues/fetchIssueById",

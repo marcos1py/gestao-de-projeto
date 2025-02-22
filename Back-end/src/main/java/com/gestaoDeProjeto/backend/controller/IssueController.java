@@ -12,7 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.UUID;
 @RestController
 @RequestMapping("/api/issues")
 public class IssueController {
@@ -24,12 +24,12 @@ public class IssueController {
     private UserService userService;
 
     @GetMapping("/{issueId}")
-    public ResponseEntity<Issue> getIssueById(@PathVariable Long issueId) throws Exception {
+    public ResponseEntity<Issue> getIssueById(@PathVariable UUID issueId) throws Exception {
         return ResponseEntity.ok(issueService.getIssueById(issueId));
     }
 
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Issue>> getIssueByProjectId(@PathVariable Long projectId)
+    public ResponseEntity<List<Issue>> getIssueByProjectId(@PathVariable UUID projectId)
     throws Exception {
         return ResponseEntity.ok(issueService.getIssueByProjectId(projectId));
     }
@@ -57,7 +57,7 @@ public class IssueController {
 	}
     
     @DeleteMapping("/{issueId}")
-    public ResponseEntity<MessageResponse> deleteIssue(@PathVariable Long issueId,
+    public ResponseEntity<MessageResponse> deleteIssue(@PathVariable UUID issueId,
                                                        @RequestHeader("Authorization") String token)
             throws Exception {
         User user = userService.findUserProfileByJwt(token);
@@ -69,8 +69,8 @@ public class IssueController {
 
 
     @PutMapping ("/{issueId}/assignee/{userId}")
-    public ResponseEntity<Issue> addUserToIssue(@PathVariable Long issueId,
-                                            @PathVariable Long userId)
+    public ResponseEntity<Issue> addUserToIssue(@PathVariable UUID issueId,
+                                            @PathVariable UUID userId)
             throws Exception {
 
         Issue issue = issueService.addUserToIssue(issueId, userId);
@@ -81,7 +81,7 @@ public class IssueController {
     @PutMapping("/{issueId}/status/{status}")
     public ResponseEntity<Issue>updateIssueStatus(
             @PathVariable String status,
-            @PathVariable Long issueId) throws Exception {
+            @PathVariable UUID issueId) throws Exception {
         Issue issue = issueService.updateStatus(issueId, status);
         return ResponseEntity.ok(issue);
     }

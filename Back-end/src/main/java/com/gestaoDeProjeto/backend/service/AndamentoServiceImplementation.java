@@ -26,7 +26,7 @@ public class AndamentoServiceImplementation implements AndamentoService{
     private UserRepository userRepository;
 
     @Override
-    public Andamentos createAndamento(Long issueId, Long userId, String content) throws Exception {
+    public Andamentos createAndamento(UUID issueId, UUID userId, String content) throws Exception {
         Optional<Issue> issueOptional = issueRepository.findById(issueId);
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -55,7 +55,7 @@ public class AndamentoServiceImplementation implements AndamentoService{
 
 
     @Override
-    public void deleteAndamento(UUID andamentoId, Long userId) throws Exception {
+    public void deleteAndamento(UUID andamentoId, UUID userId) throws Exception {
         Optional<Andamentos> andamentoOptional = andamentoRepository.findById(andamentoId);
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -78,7 +78,7 @@ public class AndamentoServiceImplementation implements AndamentoService{
     }
 
     @Override
-    public List<Andamentos> findAndamentosByIssueId(Long issueId) {
+    public List<Andamentos> findAndamentosByIssueId(UUID issueId) {
         return andamentoRepository.findAndamentoByIssueId(issueId);
     }
 }

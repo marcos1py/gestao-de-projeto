@@ -8,17 +8,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime; // Certifique-se de que esta importação está presente
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class IssueDTO {
 
-    private Long id;
+    private UUID id;
     private String title;
     private String description;
     private String status;
-    private Long projectID;
+    private UUID projectID;
     private String priority;
     private LocalDate dueDate;
     private LocalDateTime createdAt; 

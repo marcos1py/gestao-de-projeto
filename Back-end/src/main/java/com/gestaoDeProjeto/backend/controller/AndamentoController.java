@@ -11,7 +11,7 @@ import com.gestaoDeProjeto.backend.requist.CreateAndamentoRequest;
 import com.gestaoDeProjeto.backend.response.MessageResponse;
 import com.gestaoDeProjeto.backend.service.AndamentoService;
 import com.gestaoDeProjeto.backend.service.UserService;
-
+import java.util.UUID;
 import java.util.List;
 @RestController
 @RequestMapping("/api/andamentos")
@@ -42,7 +42,7 @@ public class AndamentoController {
 	}
 	
 	@GetMapping("/{issueId}")
-	public ResponseEntity<List<Andamentos>> getAndamentoByIssueId(@PathVariable Long issueId){
+	public ResponseEntity<List<Andamentos>> getAndamentoByIssueId(@PathVariable UUID issueId){
 		List<Andamentos> andamentos = andamentoService.findAndamentosByIssueId(issueId);
 		return new ResponseEntity<>(andamentos,HttpStatus.OK);
 	}

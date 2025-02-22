@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Category;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.service.CategoryService;
@@ -48,7 +48,7 @@ public class CategoryController {
 
     // Obter Categoria por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable UUID id, @RequestHeader("Authorization") String jwt) {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Optional<Category> categoryOptional = categoryService.getCategoryById(id);
@@ -64,7 +64,7 @@ public class CategoryController {
 
     // Atualizar Categoria
     @PatchMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Category> updateCategory(@PathVariable UUID id, @RequestBody Category category, @RequestHeader("Authorization") String jwt) {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             Category updatedCategory = categoryService.updateCategory(id, category);
@@ -76,7 +76,7 @@ public class CategoryController {
 
     // Deletar Categoria
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id, @RequestHeader("Authorization") String jwt) {
         try {
             User user = userService.findUserProfileByJwt(jwt);
             categoryService.deleteCategory(id);

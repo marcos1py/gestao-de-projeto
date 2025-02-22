@@ -15,7 +15,7 @@ public class InvitationServiceImplementation implements InvitationService{
     @Autowired
     private EmailService emailService;
     @Override
-    public void sendInvitation(String email, Long projectId) throws MessagingException {
+    public void sendInvitation(String email, UUID projectId) throws MessagingException {
         String invitationToken= UUID.randomUUID().toString();
 
         Invitation invitation = new Invitation();
@@ -34,7 +34,7 @@ public class InvitationServiceImplementation implements InvitationService{
     }
 
     @Override
-    public Invitation acceptInvitation(String token, Long userId) throws Exception {
+    public Invitation acceptInvitation(String token, UUID userId) throws Exception {
         Invitation invitation = invitationRepository.findByToken(token);
         if(invitation == null) {
             throw new Exception("Invalid invitation token");

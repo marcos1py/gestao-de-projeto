@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.Tags;
 import com.gestaoDeProjeto.backend.modal.User;
@@ -55,7 +55,7 @@ public class TagsController {
 
     // Obter Tag por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Tags> getTagById(@PathVariable Long id, 
+    public ResponseEntity<Tags> getTagById(@PathVariable UUID id, 
     @RequestHeader("Authorization")String jwt) throws Exception
      {
         try {
@@ -73,7 +73,7 @@ public class TagsController {
 
     // Atualizar Tag
     @PatchMapping("/{id}")
-    public ResponseEntity<Tags> updateTag(@PathVariable Long id, @RequestBody Tags tag, 
+    public ResponseEntity<Tags> updateTag(@PathVariable UUID id, @RequestBody Tags tag, 
     @RequestHeader("Authorization")String jwt) throws Exception
     {
         try {
@@ -87,7 +87,7 @@ public class TagsController {
 
     // Deletar Tag
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long id, 
+    public ResponseEntity<Void> deleteTag(@PathVariable UUID id, 
     @RequestHeader("Authorization")String jwt) throws Exception
      {
         try {

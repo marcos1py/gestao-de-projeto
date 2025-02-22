@@ -4,7 +4,7 @@ import com.gestaoDeProjeto.backend.modal.Tags;
 import com.gestaoDeProjeto.backend.repository.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +25,12 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public Optional<Tags> getTagById(Long id) {
+    public Optional<Tags> getTagById(UUID id) {
         return tagsRepository.findById(id);
     }
 
     @Override
-    public Tags updateTag(Long id, Tags tagDetails) {
+    public Tags updateTag(UUID id, Tags tagDetails) {
         Optional<Tags> existingTag = tagsRepository.findById(id);
         if (existingTag.isPresent()) {
             Tags tag = existingTag.get();
@@ -41,7 +41,7 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public boolean deleteTag(Long id) {
+    public boolean deleteTag(UUID id) {
         Optional<Tags> tag = tagsRepository.findById(id);
         if (tag.isPresent()) {
             tagsRepository.delete(tag.get());

@@ -12,7 +12,7 @@ import com.gestaoDeProjeto.backend.modal.Chat;
 import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.ProjectRepository;
-
+import java.util.UUID;
 @Service
 public class ProjectServiceImpl implements ProjectService{
 
@@ -96,7 +96,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     
 
     @Override
-    public Project getProjectById(Long projectId) throws Exception {
+    public Project getProjectById(UUID projectId) throws Exception {
 
         Optional<Project> optionalProject = projectRepository.findById(projectId);
 
@@ -107,7 +107,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     }
 
     @Override
-    public void deleteProject(Long projectId, Long userId) throws Exception {
+    public void deleteProject(UUID projectId, UUID userId) throws Exception {
 
         getProjectById(projectId);
         //userService.findUserById(userId);
@@ -115,7 +115,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     }
 
     @Override
-    public Project updateProject(Project updatedProject, Long id) throws Exception {
+    public Project updateProject(Project updatedProject, UUID id) throws Exception {
 
         Project project = getProjectById(id);
 
@@ -127,7 +127,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     }
 
     @Override
-    public void addUserToProject(Long projectId, Long userId) throws Exception {
+    public void addUserToProject(UUID projectId, UUID userId) throws Exception {
 
         Project project = getProjectById(projectId);
         User user = userService.findUserById(userId);
@@ -140,7 +140,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     }
 
     @Override
-    public void removeUserFromProject(Long projectId, Long userId) throws Exception {
+    public void removeUserFromProject(UUID projectId, UUID userId) throws Exception {
 
         Project project = getProjectById(projectId);
         User user = userService.findUserById(userId);
@@ -153,7 +153,7 @@ public List<Project> getProjectByTeam(User user, String category, String tag, St
     }
 
     @Override
-    public Chat getChatByProjectId(Long projectId) throws Exception {
+    public Chat getChatByProjectId(UUID projectId) throws Exception {
 
         Project project = getProjectById(projectId);
         return project.getChat();

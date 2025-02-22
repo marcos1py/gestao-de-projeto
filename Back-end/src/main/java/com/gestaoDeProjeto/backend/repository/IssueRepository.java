@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.gestaoDeProjeto.backend.modal.Issue;
 import com.gestaoDeProjeto.backend.modal.User;
 import java.util.List;
-
-public interface IssueRepository extends JpaRepository<Issue, Long> {
+import java.util.UUID;
+public interface IssueRepository extends JpaRepository<Issue, UUID> {
     
-    List<Issue> findByProjectId(Long id);
+    List<Issue> findByProjectId(UUID id);
     
     List<Issue> findByAssignee(User assignee);
 }

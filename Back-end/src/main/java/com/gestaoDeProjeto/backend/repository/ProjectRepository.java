@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Project;
 import com.gestaoDeProjeto.backend.modal.User;
 
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
     List <Project> findByOwner(User user);
 	List<Project> findByNameContainingAndTeamContains(String partialName,User user);

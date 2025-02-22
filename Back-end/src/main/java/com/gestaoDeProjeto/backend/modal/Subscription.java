@@ -1,7 +1,11 @@
 package com.gestaoDeProjeto.backend.modal;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,9 +14,11 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Subscription {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 	
 	private LocalDate subStartDate;
 	
@@ -29,7 +35,7 @@ public class Subscription {
 		super();
 	}
 
-	public Subscription(Long id, LocalDate subStartDate, LocalDate subEndDate, PlanType planType, boolean isValid,
+	public Subscription(UUID id, LocalDate subStartDate, LocalDate subEndDate, PlanType planType, boolean isValid,
 			User user) {
 		super();
 		this.id = id;
@@ -40,11 +46,11 @@ public class Subscription {
 		this.user = user;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

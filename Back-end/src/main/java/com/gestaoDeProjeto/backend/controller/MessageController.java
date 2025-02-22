@@ -3,7 +3,7 @@ package com.gestaoDeProjeto.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.UUID;
 import com.gestaoDeProjeto.backend.modal.Chat;
 import com.gestaoDeProjeto.backend.modal.Message;
 import com.gestaoDeProjeto.backend.modal.User;
@@ -39,7 +39,7 @@ public class MessageController {
     }
 
     @GetMapping("/chat/{projectId}")
-    public ResponseEntity<List<Message>> getMessagesByChatId(@PathVariable Long projectId)
+    public ResponseEntity<List<Message>> getMessagesByChatId(@PathVariable UUID projectId)
             throws Exception {
         List<Message> messages = messageService.getMessagesByProjectId(projectId);
         return ResponseEntity.ok(messages);
