@@ -18,6 +18,8 @@ import AcceptInvitation from "./pages/Project/AcceptInvitation";
 import Tags from "./pages/Tags/Tags";
 import LoadingScreen from "./components/ui/LoadingScreen";
 import DemandasKanban from "./pages/Demandas/DemandasKanban";
+import Configuração from "./pages/Configuracao/Configuracao";
+
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
@@ -49,6 +51,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Configuração" element={<Configuração />} />
             <Route path="/Demandas" element={<DemandasKanban />} />
             <Route path="/category" element={<Category />} />
             <Route path="/tags" element={<Tags />} />

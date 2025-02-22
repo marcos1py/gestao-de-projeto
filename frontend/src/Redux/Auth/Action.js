@@ -29,14 +29,10 @@ export const register = createAsyncThunk(
       // Verifica se a resposta foi bem-sucedida
       if (!response.ok) {
         return rejectWithValue(data.message || "Erro ao registrar usuário.");
-      }
-
-      if (data.jwt) {
-        localStorage.setItem("jwt", data.jwt);
+      } else {
         return data;
       }
 
-      return rejectWithValue("JWT não encontrado.");
     } catch (error) {
       return rejectWithValue(error.message || "Erro desconhecido.");
     }

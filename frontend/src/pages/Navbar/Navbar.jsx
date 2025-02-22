@@ -21,8 +21,6 @@ const Navbar = () => {
         <Button onClick={()=>navigate("/Demandas")} variant="ghost">Demandas</Button>
         <Button onClick={()=>navigate("/Tags")} variant="ghost">Tags</Button>
         <Button onClick={()=>navigate("/Category")} variant="ghost">Categorys</Button>
-        
-{/* <Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button> */}
       </div>
 
       <div className="flex gap-3 items-center">
@@ -33,6 +31,7 @@ const Navbar = () => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
+                <DropdownMenuItem onClick={()=>navigate("/Configuração")}>Configuração</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -30,8 +30,7 @@ const Login = () => {
 
     return (
         <div className="space-y-5">
-            <h1>Login</h1>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+         
             <Form {...form}>
                 <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
@@ -68,9 +67,11 @@ const Login = () => {
                             </FormItem>
                         )}
                     />
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
                     <Button type="submit" className="w-full mt-5">
                         Sign In
                     </Button>
+                    
                 </form>
             </Form>
         </div>
