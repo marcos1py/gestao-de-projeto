@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.gestaoDeProjeto.backend.config.JwtProvider;
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.repository.UserRepository;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -49,5 +50,9 @@ public class UserServiceImpl implements UserService{
 
         user.setProjectSize(user.getProjectSize()+number);
         return userRepository.save(user);
+    }
+    @Override
+    public List<User> getAllUsers() throws Exception {
+        return userRepository.findAll();
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestaoDeProjeto.backend.modal.User;
 import com.gestaoDeProjeto.backend.service.UserService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,6 +25,12 @@ public class UserController {
 		User user = userService.findUserProfileByJwt(jwt);
 		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
+		// Novo endpoint para retornar todos os usuários
+		@GetMapping("/all")
+		public ResponseEntity<List<User>> getAllUsers() throws Exception {
+			List<User> users = userService.getAllUsers();
+			return new ResponseEntity<>(users, HttpStatus.OK);
+		}
 	
-	
+		
 }

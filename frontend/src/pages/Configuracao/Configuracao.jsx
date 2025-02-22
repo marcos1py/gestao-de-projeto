@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SidebarConfiguracao from "./SidebarConfiguracao";
 import ProfileForm from "./ProfileForm";
-import AddUserForm from "./AddUserForm";
+import UserManagement from "./UserManagement";
 
 const Configuracao = () => {
   const [modo, setModo] = useState("perfil"); // "perfil" ou "add"
@@ -25,7 +25,7 @@ const Configuracao = () => {
         {modo === "perfil" && (
           <ProfileForm fotoPerfil={fotoPerfil} handleFotoChange={handleFotoChange} />
         )}
-        {modo === "add" && <AddUserForm />}
+        {modo === "add" && <UserManagement />}
       </div>
     </div>
   );
