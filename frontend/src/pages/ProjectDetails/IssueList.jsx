@@ -52,8 +52,7 @@ const IssueList = ({ title, status }) => {
             <DialogTrigger>
               <Button
                 variant="outline"
-                className="w-full flex items-center gap-2"
-              >
+                className="w-full flex items-center gap-2">
                 <PlusIcon />
                 Create Issue
               </Button>
