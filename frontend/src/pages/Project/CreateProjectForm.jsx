@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,

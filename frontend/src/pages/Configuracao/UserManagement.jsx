@@ -4,7 +4,7 @@ import { getAllUsers } from "@/Redux/Auth/Action"; // ajuste o caminho conforme 
 import AddUserForm from "./AddUserForm";
 import { Button } from "@/components/ui/Button";
 // Componentes de Dialog (pode ser do Radix UI, Headless UI, ou sua implementação customizada)
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/Dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 
 const UserManagement = () => {
   const dispatch = useDispatch();

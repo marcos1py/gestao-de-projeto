@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import Category from "./pages/Category/Category";
-import Navbar from "./pages/Navbar/Navbar";
+import Navbar from "./pages/Navbar/Navbar.jsx";
 import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 import IssueDetails from "./pages/IssueDetails/IssueDetails";
 import { fetchIssuesForUser } from "@/Redux/Issue/Action";
