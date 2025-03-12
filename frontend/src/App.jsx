@@ -46,7 +46,7 @@ function App() {
 
   return (
     <>
-{ auth.user && auth.user.id ? (
+    { auth.user && auth.user.id ? (
         <div>
           <Navbar />
           <Routes>
