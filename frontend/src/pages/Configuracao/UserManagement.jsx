@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "@/Redux/Auth/Action"; // ajuste o caminho conforme sua estrutura
 import AddUserForm from "./AddUserForm";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 // Componentes de Dialog (pode ser do Radix UI, Headless UI, ou sua implementação customizada)
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 

@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import IssueCard from "./IssueCard";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CreateIssueForm from "./CreateIssueForm";
 import { useDispatch, useSelector } from "react-redux";

@@ -8,7 +8,7 @@ import { fetchAndamentos } from "@/Redux/Andamento/Action";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import AndamentosSection from "./AndamentosSection";
-import { Button } from "@/components/ui/Button"; // Supondo que exista um componente Button
+import { Button } from "@/components/ui/button"; // Supondo que exista um componente Button
 
 const IssueDetails = () => {
   const { projectId, issueId } = useParams();

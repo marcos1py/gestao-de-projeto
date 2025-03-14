@@ -1,7 +1,7 @@
 // src/components/Demandas/FilterSectionDemandas.jsx
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

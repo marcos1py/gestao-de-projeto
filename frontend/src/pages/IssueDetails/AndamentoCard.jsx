@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { deleteAndamento } from "@/Redux/Andamento/Action";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useDispatch } from "react-redux";

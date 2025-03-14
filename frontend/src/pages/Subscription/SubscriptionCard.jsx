@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { createPayment } from "@/Redux/Payment/Action";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { useDispatch } from "react-redux";
