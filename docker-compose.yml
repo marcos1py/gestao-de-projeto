@@ -32,7 +32,7 @@ services:
       dockerfile: Dockerfile
     container_name: react-vite-frontend
     ports:
-      - "3000:80"  # Mapeia a porta 80 do container para a 3000 do host
+      - "3000:80"  
     networks:
       - app-network
 

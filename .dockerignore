@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+.git
+.git
+.git
+.gitignore
+docker-compose.override.yml
+Dockerfile.dev
+*.log
+*.md
+node_modules

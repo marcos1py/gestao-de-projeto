@@ -1,0 +1,7 @@
+& "C:\Program Files\7-Zip\7z.exe" a -tzip -mx=1 `
+-x!"C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\frontend\node_modules\*" `
+-x!"C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\dist\*" `
+-x!"C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\.vscode\*" `
+-x!"C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\.idea\*" `
+-x!"C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\logs\*" `
+"projeto.zip" "C:\Users\marco\OneDrive\Documentos\Novo Projeto\gestao de projeto\*"
